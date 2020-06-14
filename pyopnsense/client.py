@@ -53,9 +53,16 @@ class OPNClient(object):
                                 timeout=DEFAULT_TIMEOUT)
         return self._process_response(response)
 
-    def _post(self, endpoint, body):
+    def _post(self, endpoint, body=None, json=None):
         req_url = '{}/{}'.format(self.base_url, endpoint)
-        response = requests.post(req_url, data=body, verify=self.verify_cert,
-                                 auth=(self.api_key, self.api_secret),
-                                 timeout=DEFAULT_TIMEOUT)
+
+        post_param = dict(
+            verify=self.verify_cert,
+            auth=(self.api_key, self.api_secret),
+            timeout=DEFAULT_TIMEOUT,
+            json=json,
+            data=body
+        )
+
+        response = requests.post(req_url, **post_param)
         return self._process_response(response)
