@@ -1,6 +1,5 @@
-import json
-
 from pyopnsense import client
+
 
 class FirewallAliasClient(client.OPNClient):
     def search_item(self, searchPhrase=None, current=1, rowCount=100):
@@ -13,10 +12,15 @@ class FirewallAliasClient(client.OPNClient):
         if searchPhrase is None:
             searchPhrase = str()
 
-        body = dict(current=current, rowCount=rowCount, searchPhrase=searchPhrase)
+        body = dict(
+            current=current, rowCount=rowCount, searchPhrase=searchPhrase
+        )
         return self._post('firewall/alias/searchItem', body=body)
 
-    def _save_item(self, endpoint, name, alias_type, content, proto=None, updatefreq=None, counters=None, description=None, enabled=None):
+    def _save_item(
+        self, endpoint, name, alias_type, content, proto=None,
+        updatefreq=None, counters=None, description=None, enabled=None
+        ):
         # Default value
         if proto is None:
             proto = str()
@@ -47,12 +51,16 @@ class FirewallAliasClient(client.OPNClient):
 
         return self._post(endpoint, json=body)
 
-    def set_item(self, id, name, alias_type, content, proto=None, updatefreq=None, counters=None, description=None, enabled=None):
+    def set_item(
+        self, id, name, alias_type, content, proto=None, updatefreq=None,
+        counters=None, description=None, enabled=None
+        ):
         """Update an alias
 
         :param string id: alias identifier.
         :param string name: current page.
-        :param string alias_type: type of alias: host, network, port, url, urltable, geoip, networkgroup, external.
+        :param string alias_type: type of alias: host, network, port, url,
+        :                         urltable, geoip, networkgroup, external.
         :param list content: the network content in list format.
         :param string proto: the network content.
         :param string updatefreq: the network content.
@@ -62,14 +70,29 @@ class FirewallAliasClient(client.OPNClient):
 
         endpoint = "{}/{}".format("firewall/alias/setItem", id)
 
-        return self._save_item(endpoint, name, alias_type, content, proto, updatefreq, counters, description, enabled)
+        return self._save_item(
+            endpoint,
+            name,
+            alias_type,
+            content,
+            proto,
+            updatefreq,
+            counters,
+            description,
+            enabled
+        )
 
-    def add_item(self, name, alias_type, content, proto=None, updatefreq=None, counters=None, description=None, enabled=None):
+    def add_item(
+        self,
+        name, alias_type, content, proto=None, updatefreq=None, counters=None,
+        description=None, enabled=None
+        ):
         """Create an alias
 
         :param string id: alias identifier.
         :param string name: current page.
-        :param string alias_type: type of alias: host, network, port, url, urltable, geoip, networkgroup, external.
+        :param string alias_type: type of alias: host, network, port, url,
+        :                         urltable, geoip, networkgroup, external.
         :param list content: the network content in list format.
         :param string proto: the network content.
         :param string updatefreq: the network content.
@@ -79,7 +102,10 @@ class FirewallAliasClient(client.OPNClient):
 
         endpoint = "firewall/alias/addItem/"
 
-        return self._save_item(endpoint, name, alias_type, content, proto, updatefreq, counters, description, enabled)
+        return self._save_item(
+            endpoint, name, alias_type, content, proto,
+            updatefreq, counters, description, enabled
+        )
 
     def delete_item(self, id):
         """Del item with given identifier.
