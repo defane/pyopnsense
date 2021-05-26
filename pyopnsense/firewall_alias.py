@@ -51,6 +51,24 @@ class FirewallAliasClient(client.OPNClient):
 
         return self._post(endpoint, json=body)
 
+    def get_aliases(self):
+        endpoint = "firewall/alias_util/aliases/"
+        return self._get(endpoint)
+
+    def get_tables_by_name(self, name, searchPhrase=None, current=1, rowCount=200):
+        if searchPhrase is None:
+            searchPhrase = str()
+
+        body = dict(
+            current=current, rowCount=rowCount, searchPhrase=searchPhrase
+        )
+
+        endpoint = "{}/{}".format("firewall/alias_util/list", name)
+
+        res = self._post(endpoint, json=body)
+
+        return map(lambda x: x['ip'], res['rows'])
+
     def set_item(
         self, id, name, alias_type, content, proto=None, updatefreq=None,
         counters=None, description=None, enabled=None
