@@ -151,4 +151,6 @@ class FirewallAliasClient(client.OPNClient):
         """Apply aliases.
         """
 
-        return self._get("firewall/alias/reconfigure")
+        endpoint = "firewall/alias/reconfigure"
+
+        return self._post(endpoint, json=dict())

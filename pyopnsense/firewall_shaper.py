@@ -131,4 +131,6 @@ class FirewallShaperClient(client.OPNClient):
         """Apply Traffic Shaper rule.
         """
 
-        return self._get("trafficshaper/service/reconfigure")
+        endpoint = "trafficshaper/service/reconfigure"
+
+        return self._post(endpoint, json=dict())
